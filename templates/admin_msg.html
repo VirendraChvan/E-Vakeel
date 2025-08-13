@@ -1,0 +1,75 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Messages{% endblock title %}
+
+{% block TabName %}
+<h2>Messages</h2>
+
+<div class="team_action" style="justify-content: end;">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Name">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+
+</div>
+
+{% endblock TabName %}
+
+{% block body %}
+
+
+
+
+
+{% if result == True %}
+<div style="margin: 2% 2%;">
+    Result for"{{data}}..."<a href="/admin_msg">Go to all List</a>
+</div>    
+{% elif result == False %}
+<div style="margin: 2% 2%;">
+    "{{data}}..." is not Found !!<a href="/admin_msg">Go to all List</a>
+</div>
+{% endif %} 
+
+ 
+<div class="msg_prt" >
+
+
+    {% for i in customer_messages %}
+    <div class="msg_box"  id="{{i.id}}">
+
+        <div class="upperline"></div>
+
+        <div class="msg_upper">
+            <img src="{% static 'images/img.jpg' %}" alt="profile image">
+            <div class="proinfo">
+                <h3>{{i.Name}}</h3>
+                <div>
+                    <img src="{% static 'images/grey_mail.png' %}" alt=""><p>{{i.Email}}</p>
+                    <img src="{% static 'images/grey_phone.png' %}" alt=""><p>{{i.Phone}}</p>
+                </div>
+                
+            </div>
+            <a href="/delete_msg?id={{i.id}}" title="Delete Message"><img src="{% static 'images/delete_img.png' %}" alt="delete image"></a>
+        </div>  
+
+        <div class="msg_plate">
+            <div class="text">
+                <b> Subject - {{i.Subject}} </b><br><br>
+                {{i.Message}}
+            </div>
+            <div class="date">
+                <p>{{i.Date}}</p>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+
+</div>
+</div>
+{% endblock body %}

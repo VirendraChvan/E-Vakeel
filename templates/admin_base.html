@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Vakeel Admin | {% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+    <link rel="icon" href="{% static 'images/logo1.png' %}" type="image/x-icon">   
+    <link href='https://fonts.googleapis.com/css?family=Varela Round' rel='stylesheet'>
+</head>
+<body>
+
+    
+    <div id="preloader">
+
+        <img src="{% static 'images/logo1.png' %}" alt="">
+        <div>
+            <h1>E-Vakeel Admin</h1>
+            <p>Website is loading  .  .  .</p>
+        </div>
+        
+    </div>
+
+    
+    <div id="pop_back_before" class="pop_back_before"></div>
+
+      <!-- popup notification-->
+      <div class="popbody_notification_before" id="popbody_notification_before">
+
+        <div class="crossdiv">
+            <h2>Notification</h2>
+
+           
+            <img src="{% static 'images/white cross.png' %}" alt="" onclick="notiPop()">
+            
+        </div>
+
+        <div class="noti_action">
+            <a href="/delete_noti_all"><h3>Clear all</h3></a>
+        </div>
+
+        <div class="notidiv">
+
+            {% if new_noti %}
+                {% for n in new_noti %}
+                <div class="notibox">
+
+                    <a href="{{n.noti_url}}" class="noti_text">
+                        <h3>{{n.Section_name}}-[{{n.Date}}]</h3>
+                        <p>{{n.noti_text}}</p>
+                    </a>
+
+                    <a href="/delete_noti?id={{n.id}}" class="close_img"><img src="{% static 'images/closeimg.png' %}" alt=""></a>
+                
+                </div>
+                {% endfor %}
+
+            {% else %}
+
+                <center><h3 style="color: white;">Today.. We have not Notifications</h3></center>
+            {% endif %}
+            
+
+        </div>
+        
+        
+    </div>
+
+    {% block pop %} {% endblock pop %}
+    <div class="am_body">
+
+        <nav class="am_navbar">
+
+            <div class="logobox">
+                <img src="{% static 'images/logo1.png' %}" alt="e-vakil" class="logoimg">
+                <div class="logotext">
+                    <h1>Evakeel</h1>
+                    <h5>Admin Panel</h5>
+                </div>
+            </div>
+
+            <div class="navoptions">
+                <ul>
+                    <a href="/admin_home" class="optext">
+                        <li>
+                            <img src="{% static 'images/dash_icon.png' %}" alt="" class="opimg">
+                            Dashboard
+                        </li>
+                    </a>
+                    <a href="/admin_team" class="optext">
+                        <li>
+                            <img src="{% static 'images/team_icon.png' %}" alt="" class="opimg">
+                            Team Members
+                        </li>
+                    </a>
+                    <a href="/admin_msg" class="optext">
+                        <li>
+                            <img src="{% static 'images/msg_icon.png' %}" alt="" class="opimg">
+                            Messages
+                        </li>
+                    </a>
+                    <a href="/Appointment_section" class="optext">
+                        <li>
+                            <img src="{% static 'images/Appointment_icon.png' %}" alt="" class="opimg">
+                            Appointment
+                        </li>
+                    </a>
+                    <a href="/all_subs" class="optext">
+                        <li>
+                            <img src="{% static 'images/subs_icon.png' %}" alt="" class="opimg">
+                            Blog Subscribers
+                        </li>
+                    </a>
+                    <a href="/blog_dash" class="optext">
+                        <li>
+                            <img src="{% static 'images/blog_icon.png' %}" alt="" class="opimg">
+                            Blog
+                        </li>
+                    </a>
+                    <a href="/sub_admin" class="optext">
+                        <li>
+                            <img src="{% static 'images/subadmin.png' %}" alt="" class="opimg">
+                            Sub Admin
+                        </li>
+                    </a>
+
+                </ul>
+            </div>  
+        </nav>
+
+        <div class="tab">
+
+            <div class="upperstrip">
+
+                {% if new_noti %}    
+                <img src="{% static 'images/notiicon_up.png' %}" alt="" class="bell"  onclick="notiPop()">
+                {% else %}
+                <img src="{% static 'images/notiicon.png' %}" alt="" class="bell"  onclick="notiPop()">
+  
+              {% endif %}
+
+                <div class="log_user_prt">
+                    <div class="loguser">
+                        <img src="{% static 'images/img.jpg' %}" alt="">
+                        <p>Hi,{{request.user.first_name}} {{request.user.last_name}}</p>
+                    </div>
+                
+                    <div class="dropdown-content">
+                        <a href="/logout_admin">Log out<img src="{% static 'images/logout.png' %}" alt="" style="  height: 20px;
+                            width: 20px;"></a>
+                    </div>
+                </div>    
+                
+            </div>
+
+            <div class="tab_head">
+                {% block TabName %}{% endblock TabName %}
+            </div>
+
+            {% block body %}{% endblock body %}
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        
+        function drawChart() {
+            // Get all span tags for days and views
+            var days = document.getElementsByClassName('day');
+            var views = document.getElementsByClassName('views');
+        
+            // Create data table
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Day');
+            data.addColumn('number', 'Views');
+        
+            // Populate data table with span values
+            for (var i = 0; i < days.length; i++) {
+                var day = days[i].innerText;
+                var view = parseFloat(views[i].innerText);
+                data.addRow([day, view]);
+            }
+        
+            // Set chart options
+            var options = {
+                title: 'Views',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#fd683e'],
+            };
+        
+            // Instantiate and draw the chart
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            chart.draw(data, options);
+        }
+        
+    </script>
+
+    
+
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        
+        function drawChart() {
+            // Get all span tags for days and messages
+            var days = document.getElementsByClassName('day');
+            var messages = document.getElementsByClassName('messages');
+        
+            // Create data table
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Day');
+            data.addColumn('number', 'Messages');
+        
+            // Populate data table with span values
+            for (var i = 0; i < days.length; i++) {
+                var day = days[i].innerText;
+                var message = parseFloat(messages[i].innerText);
+                data.addRow([day, message]);
+            }
+        
+            // Set chart options
+            var options = {
+                title: 'Messages',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#fd683e'] 
+            };
+        
+            // Instantiate and draw the chart
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+            chart.draw(data, options);
+        }
+    </script>
+    <script>
+        
+var loader = document.getElementById("preloader");
+
+window.addEventListener("load",function(){
+    loader.style.display="none";
+})
+    </script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

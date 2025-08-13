@@ -1,0 +1,93 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Appointment{% endblock title %}
+
+
+{% block pop %} 
+
+
+<div class="add_appointment_pop_back_before" id="add_appointment_pop_back_before">
+
+</div>  
+
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+<h2>
+    <a href="/Appointment_section">Appointment of Evakeel </a> 
+    <a href="/Create_appointment"> > Manage Appointment</a>
+    <a href="" class="subtab_head"> > Update Appointment</a>
+</h2>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+<div class="add_appointment_tab_prt update_appointment_tab_prt">
+
+    <div class="update_appointment_tab">
+        <div class="ud_head">
+            <a href="/Create_appointment" class="tab_cancel"><img src="{% static 'images/closeimg.png' %}" alt="x" ></a>
+        </div>
+
+        <div class="apt_name_prt">
+
+            <table class="apt_name">
+                <tr>
+                    <td><b>Slot Name:- </b> {{got_id.sc_name}}</td>
+                    <td> <b>Slot Time:-</b> {{got_id.start_time}} To {{got_id.end_time}}</td>
+                </tr>
+            </table>
+
+        </div>
+
+        
+        <form action="" method="post" class="apt_input">
+            {% csrf_token %}
+
+
+            <div>
+                <label for="sc_name">New slot Name</label><br>
+                <input type="text" name="sc_name"  placeholder="Enter Slot Name"  value="{{got_id.sc_name}}">  
+            </div>
+            
+            <div>
+                <label for="start_time">New start time</label><br>
+                <input type="time" format="%I:%M %p" name="start_time" id="">
+            </div>
+            
+            <div>
+                <label for="end_time">New end time</label><br>
+                <input type="time" format="%I:%M %p" name="end_time" id="" >
+            </div>
+
+            <button type="submit">Update "{{got_id.sc_name}}" Slot</button>
+        </form>
+
+
+
+        <div class="update_tab_table">
+            <table>
+                {% for s in slots %}
+                    <tr class="apt_table_row">
+                        <td>{{s.sc_name}}</td>
+                        <td>{{s.start_time}}</td>
+                        <td>{{s.end_time}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+    
+{% endblock body %}
+

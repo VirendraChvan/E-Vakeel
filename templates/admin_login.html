@@ -1,0 +1,51 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Vakeel Admin | Login</title>
+    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+    <link rel="icon" href="{% static 'images/logo1.png' %}" type="image/x-icon">   
+    <link href='https://fonts.googleapis.com/css?family=Varela Round' rel='stylesheet'>
+</head>
+<body>
+
+
+
+    <div class="log_prt">
+        <div class="log_box">
+            <div class="sub_box1">
+                <img src="{% static 'images/logo1.png' %}" alt="e-vakil" class="logo_log">
+                <div class="log_text">
+                    <h1>E-Vakeel</h1>
+                    <h3>Admin Panel</h3>
+                </div>
+            </div>
+            <div class="sub_box2">
+                <h1>Login to admin</h1>
+                <form action="/admin_login" method="post" class="log_form">
+                    {% csrf_token %}
+                
+
+                    
+                    {% if messages %}
+                    {{messages.tags}}
+                        {% for message in messages %}
+                        <div class="alert">    {{ message }} !!</div>
+                        {% endfor %}  
+                    {% endif %}
+                    
+                   
+            
+                    <input type="text" name="username" class="input_admin" placeholder="Enter Username" required>
+                    <input type="Password" name="Password" class="input_admin" placeholder="Enter Password" required>
+                    <button type="submit">Submit</button>
+            </form>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>
+

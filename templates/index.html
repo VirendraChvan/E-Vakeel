@@ -1,0 +1,279 @@
+{% extends "Clientside_base.html" %}
+{% load static %}
+
+{% block title %}Evakeel{% endblock title %}
+
+
+
+{% block body %}
+    
+    <style>
+        #search-btn
+        {
+            display: none;
+        }
+
+        .box
+        {
+        position: relative;
+        overflow: hidden;
+        background-size: cover;
+        }
+        #video-background
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+
+        @media (max-width:911px) 
+        {
+
+        #video-background
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+            
+        }
+
+
+    </style>
+    <div class="pop_back_before" id="pop_back_before"></div>
+    <div class="apt_pop_body_before" id="apt_pop_body_before">
+
+        <div class="apt_pop_before" id="apt_pop_before">
+
+            <div class="apt_img">
+                <img src="{% static 'images/Appointment_img.png' %}" alt="">
+            </div>
+
+            <div class="apt_form_div">
+
+                <a href="/" class="tab_cancel"><img src="{% static 'images/closeimg.png' %}" alt="x" ></a>
+                <div class="apt_pop_header">
+                    <h1>Book Your Appointment</h1>
+                </div>
+                    
+                <form action="/book_appointment" method="post" class="book_apt">
+                    {% csrf_token %}
+        
+                        <input type="text" name="name"  placeholder="Enter full name" required>  
+
+                        <input type="text" name="email"  placeholder="Enter email" required>  
+
+                        <input type="text" name="phone"  placeholder="Enter Phone" required>  
+
+                        <input type="text" name="subject"  placeholder="Enter subject" required>  
+
+                        <select name="schedule" id="" required> 
+                            <option value="" selected><h2>Choose Time Slot</h2></option>
+                            {% for a in apts %}
+                            <option value="{{a.id}}">{{a.start_time}} to {{a.end_time}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit">Book for Consultancy</button>
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <section class="home" id="home">
+   
+        <div class="wrapper">
+           
+            <div class="box">
+
+                <video autoplay muted loop id="video-background">
+                    <source src="{% static 'images/bgvdo.webm' %}" type="video/webm">
+                </video>
+
+                <div class="content">
+                    <span>Your Tursted Partner in</span>
+                    <h3>Consumer Protection Act</h3>
+                    <p class="btn" onclick="pop_bookapt()">Book Your appointment</p>
+                </div>
+                </div>  
+        </div>
+    </section>
+
+
+    <section class="top_blog">
+        <div class="top_blog_prt">
+            <form action="/sub_blog" method="POST">
+                    {% csrf_token %}
+                <div class="input-fields">
+                    <h2 class="heading">Subscribe our blog</h2>
+                    <input type="text" class="input" placeholder="Name" name="name" required>
+                    <input type="email" class="input" placeholder="Email Address" name="email" required> 
+                    <button type="submit" class="submit">Subscribe</button>
+                </div>
+            </form> 
+
+            <div class="top_blog_part">
+
+            <h2>Top Trending</h2>
+            {% for b in top_blog %}
+            <a href="/blog_temp/{{b.id}}/" class="blog_home_box">
+                <img src="/media/{{b.Image}}" alt="photo of {{b.Title}}" class="blog_menu_img">
+                <div class="blog_box_info">
+                    <h3>{{b.Title}}</h3>
+                    <p>{{b.editor}}</p>
+                </div>
+                
+            </a>
+            {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    <section class="category" id="team">
+
+        <h1 class="heading">Our Team</h1>
+    
+        <div class="box-container">
+    
+            {% for i in team %}
+                <div class="box">
+                    <img src="/media/{{i.Image}}" alt="">
+                    <h3>{{i.Name}}</h3>
+                    <h3>{{i.Qualification}}</h3>
+                    <p>{{i.Description}}</p>     
+                    <a href="mailto:{{i.Email}}" class="btn">Contact</a>
+                </div>
+            {% endfor %}
+    
+        </div>
+    
+    </section>
+    <section class="packages" id="services">
+
+        <h1 class="heading">Consumer Protection Law</h1>
+    
+        <div class="box-container">
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law1.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>1. Adequate consumer law.</h3>
+                    <p>"Consumer's Right", by definition, and empowered with essential is the right of a consumer to have adequate information regarding the quality,and standard of the commodity they are using and that they are...</p>
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law2.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>2.Effective law implementation and enforcement.</h3>
+                    <p>It supports the enforcement process by creating a conducive environment for compliance, while enforcement plays a crucial role in deterring violations</p>
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law3.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>3.Aware Consumer</h3>
+                    <p>"It is a crucial demonstration of ensuring the purchaser or buyer is well-informed and empowered with essential information about items, the purchaser or products, services, and consumer rights."</p>
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law4.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>4. Access to redress mechanisms.</h3>
+                    <p>It is a key recommendation to establish grievance redress mechanisms that are accessible to all stakeholders, socioculturally appropriate, gender-sensitive and tailored to the local context...</p>
+                  
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law5.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>5. Effective consumer organization.</h3>
+                    <p>A consumer organization association is a membership-based non-governmental non- profit body created to promote the interests of consumers of goods and services, by disseminating informations...</p>
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law6.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>6. Responsible Business Conduct.</h3>
+                    <p>Responsible Business Conduct is a globally recognized concept founded on the idea that businesses can perform better idea that businesses when engaged in re-vitalizing the society from which they extract resources for...</p>
+                </div>
+            </div>
+    
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law7.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>7. Advisory Services for Businesses.</h3>
+                    <p>Helping businesses understand their legal obligations and mitigate risks associated with consumer complaints Advising businesses on compliance with consumer protection laws to prevent disputes and legal issues.</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="image">
+                    <img src="{% static 'images/law8.png' %}" alt="">
+                </div>
+                <div class="content">
+                    <h3>8. Pro Bono Services.</h3>
+                    <p>Providing free legal services to underprivileged consumers who cannot afford to hire a lawyer.Participating in legal aid clinics organized by NGOs, consumer protection groups, and government bodies.</p>
+                </div>
+            </div>
+
+        </div>
+    
+    </section>
+    <section class="contact" id="contact">
+    
+    <div class="wrapper1">
+        <div class="title1">
+          <h1 class="heading" style="color: #FFA500;">Contact us form</h1>
+        </div>
+        <div class="contact-form">
+        <form action="/send_msg" method="POST">
+                {% csrf_token %}
+          <div class="input-fields">
+            
+            <input type="text" class="input" placeholder="Name" name="name" required>
+            <input type="email" class="input" placeholder="Email Address" name="email" required> 
+            <input type="phone" class="input" placeholder="Phone" name="phone" required>
+            <input type="text" class="input" placeholder="Subject" name="subject" required>
+          </div>
+          <div class="msg">
+            <textarea placeholder="Message" name="message"></textarea>
+            <button type="submit" class="submit" onclick="form_submited()">send</button>
+            </form>
+          </div>
+        </div>
+        </div> 
+    
+    </section>
+
+
+    {% endblock body %}

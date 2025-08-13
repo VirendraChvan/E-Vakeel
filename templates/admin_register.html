@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Vakeel Admin | Register</title>
+    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+    <link rel="icon" href="{% static 'images/logo1.png' %}" type="image/x-icon">   
+</head>
+<body>
+
+{% comment %} we use repeat a login component {% endcomment %}
+
+<div class="logparent">
+    <div class="loginbox Resigter_box"> <!-- Combined classes into a single class attribute -->
+        <div class="loghead">
+            <h1>Register To Admin</h1>
+        </div>
+        
+        <form action="/admin_register" method="post"> <!-- Updated the form action URL -->
+            {% csrf_token %}
+            <div class="logbody">
+
+            {% if messages %}
+                {{messages.tags}}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}  
+            {% endif %}
+               
+
+                <div>
+                    <label for="fname">First Name</label><br>
+                    <input type="text" name="fname" class="input_admin" placeholder="Enter First Name" required>
+                </div>
+                <div>
+                    <label for="lname">Last Name</label><br>
+                    <input type="text" name="lname" class="input_admin" placeholder="Enter Last Name" required>
+                </div>
+                <div>
+                    <label for="username">Username</label><br>
+                    <input type="text" name="username" class="input_admin" placeholder="Enter Username" required>
+                </div>
+                <div>
+                    <label for="password">Password</label><br> 
+                    <input type="password" name="password" class="input_admin" placeholder="Enter Password">
+                </div>
+                <div class="logsubmit">
+                    <button type="submit">Register</button>
+                </div>
+
+               
+            </div>
+        </form>
+    </div>
+    <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; align-self: center; margin-top: 10px">Already have an account? <a href="/admin_login">Login</a></p>
+</div>
+
+    
+</body>
+</html>

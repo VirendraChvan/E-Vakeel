@@ -1,0 +1,79 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Add admin{% endblock title %}
+
+{% block TabName %}
+<h2>
+    <a href="/sub_admin"> Sub admin</a>
+    <a href="" class="subtab_head"> > Add admin</a>
+</h2>
+{% endblock TabName %}
+
+{% block body %}
+
+    <style>
+        .update_member_pop
+        {
+            height: 75%;
+            
+        }
+        .update_member_pop form
+        {
+            height: 100%;
+            grid-template-rows: repeat(5,1fr);
+        }
+        .add_admin_btn
+        {
+            grid-column: 1/4 !important; 
+            grid-row: 5/6 !important;
+        }
+
+    </style>
+
+   <div class="update_member_pop"> {% comment %}  reuse update {% endcomment %}
+        <div class="ud_head">
+            <a href="sub_admin" class="tab_cancel"><img src="{% static 'images/closeimg.png' %}" alt="x" ></a>
+        </div>
+        <form action="/admin_register"  method="post" enctype="multipart/form-data" class="popbody">
+
+            {% csrf_token %}
+
+   
+             
+            {% if messages %}
+            {{messages.tags}}
+                {% for message in messages %}
+                <p class="alert_admin">{{ message }} !!!</p> 
+                {% endfor %}  
+             {% endif %}
+          
+
+            <div>
+                <label for="fname">First Name</label>
+                <input type="text" name="fname" class="input_admin" placeholder="Enter First Name" required>
+            </div>
+            <div>
+                <label for="lname">Last Name</label>
+                <input type="text" name="lname" class="input_admin" placeholder="Enter Last Name" required>
+            </div>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" name="username" class="input_admin" placeholder="Enter Username" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" class="input_admin" placeholder="Enter Password" required>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" class="input_admin" placeholder="Enter email" required>
+            </div>
+                <div class="add_admin_btn class_submit">
+                    <button type="submit">Register Admin</button>
+                </div>
+            </div>
+        </form>  
+    </div>
+ 
+{% endblock body %}

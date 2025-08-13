@@ -1,0 +1,88 @@
+{% extends "Clientside_base.html" %}
+{% load static %}
+
+{% block title %}Evakeel | {{got_id.Title}}{% endblock title %}
+
+
+
+{% block body %}
+
+<div class="blog_temp_prt">
+
+    <div class="blog_temp_body">
+
+        <div class="blog_title_upside">
+            
+            <div>
+                <img src="{% static 'images/date.png' %}" alt="photo of" class="blog_temp_icon">
+                <p>{{got_id.date_blog}}</p>
+            </div>
+            
+            <div>
+                <img src="{% static 'images/view_icon.png' %}"  alt="photo of " class="blog_temp_icon">
+                <p>{{got_id.views_count}}</p>
+            </div>
+        </div>
+        <h1>{{got_id.Title}} </h1>
+        <p>-{{got_id.editor}}</p>
+        <img src="/media/{{got_id.Image}}" alt="photo of {{got_id.Title}}" class="blog_temp_img">
+        
+        <p class="blog_para">{{got_id.para}}</p>
+        
+
+        <form action="/blog_comment/{{got_id.id}}/" method="post" class="comment_input">
+            {% csrf_token %}
+
+            <h2>Add your comment</h2>
+
+            <input type="text" name="name" id="" placeholder="Name" class="input1" required>
+            
+            <input type="text" name="email" id="" placeholder="Email" class="input2" required>
+
+            <input type="text" name="comment_text" id="" placeholder="Enter Your comment" class="input3" required>
+
+            <button type="submit" >Add Comment</button>
+        </form>
+
+        <div class="comment_div">
+            <h1>Comments ({{cmt_count}})</h1>
+        {% for c in cmts%}
+            <div class="comment_box" id="{{c.id}}">
+                <img src="{% static 'images/img.jpg' %}" alt="">
+                <div class="cmt_inner_div">
+                    <div class="cmt_name">
+                        <h2>{{c.Name}}</h2>
+                        <p>{{c.Date}}</p> 
+                    </div>
+                    {{c.comment_text}}    
+                </div>
+                            
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="top_blog_div">
+        <h1>Top Headlines</h1>
+        
+        {% for t in top_blogs %}
+        <a href="/blog_temp/{{t.id}}/" class="top_blog_box" style="background-color: {% if t.id == got_id.id %}orange{% endif %};">
+            <img src="/media/{{t.Image}}" alt="photo of {{t.Title}}">
+            <div>
+                <h2>{{t.Title}}</h2>
+                <p>{{t.date_blog}}</p> 
+            </div>
+        </a>
+        {% endfor%}
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock body %}

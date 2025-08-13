@@ -1,0 +1,101 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Appointment{% endblock title %}
+
+
+{% block pop %} 
+
+
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+<style>
+    .userview
+    {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding: 1%;
+    }
+
+    .userview img
+    {
+        height: 30px;
+        width: 30px;
+        margin-right: 1%;
+    }
+</style>
+
+ <h2>Sub admin</h2>
+
+<div class="team_action">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Username">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+  <button class="addbtn"> <a href="/admin_register">Add Admin+</a></button>
+
+</div>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+<div class="booked_apt_table">
+    <table>
+        <tr class="table_head">
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        {% for i in adm %}
+        <tr class="apt_table_row" id="{{i.id}}">
+            <td class="userview"><img src="{% static 'images/img.jpg' %}" alt="" class="adm_profile"> <p>{{i.username}}</p></td>
+            <td>{{i.first_name}}</td>
+            <td>{{i.last_name}}</td>
+            <td>{{i.email}}</td>
+            <td>
+
+                {% if i.id == 1 %}
+                <a href="#" title="You Can't Delete this ">
+                    <img src="{% static 'images/delete_img.png' %}" alt="delete image" class="delete_img" style="opacity: 0.5; cursor:not-allowed;">
+                 </a>        
+                 {% else%}
+                 <a href="/sub_admin_delete?id={{i.id}}" title="Delete Message">
+                    <img src="{% static 'images/delete_img.png' %}" alt="delete image" class="delete_img" >
+                 </a> 
+                {% endif %}
+                
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+            {% if result == True %}
+
+        <div>
+            Result for"{{data}}..."<a href="/sub_admin">Go to all List</a>
+        </div>
+
+    {% elif result == False %}
+
+        <div>
+            "{{data}}..." is not Found !!<a href="/sub_admin">Go to all List</a>
+        </div>
+   
+    {% endif %} 
+</div>
+
+
+
+    
+{% endblock body %}
+

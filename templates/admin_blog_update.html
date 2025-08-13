@@ -1,0 +1,47 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Update Blog{% endblock title %}
+
+{% block TabName %}
+<h2>
+    <a href="/blog_dash"> Blog Dashboard</a>
+    <a href="" class="subtab_head"> > Update Blog</a>
+</h2>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+    <div class="update_member_pop">
+        <div class="ud_head">
+            <a href="/blog_dash" class="tab_cancel"><img src="{% static 'images/closeimg.png' %}" alt="x" ></a>
+        </div>
+        <form action=""  method="post" enctype="multipart/form-data" class="popbody">
+            {% csrf_token %}
+                
+                <div>
+                    <label for="Photo">New Blog Photo</label>
+                    <input type="file" name="Photo" placeholder="Upload your new Blog photo">
+                </div>
+                <div>
+                    <label for="Name">Title</label>
+                    <input type="text" name="Title" placeholder="Enter Your Name" value="{{got_id.Title}}">
+                </div>
+                <div>
+                    <label for="Qulification">Editor</label>
+                    <input type="text" name="editor" placeholder="Enter Your Qulification" value="{{got_id.editor}}">
+                </div>
+                <div class="big_input">
+                    <label for="Description">Paragraph</label>
+                    <textarea name="para" id="" cols="30" rows="14">{{got_id.para}}</textarea>
+                </div>
+                <div class="class_submit">
+                    <button type="submit">Update Blog on Website</button>
+                </div>
+            </div>
+        </form>  
+    </div>
+ 
+{% endblock body %}

@@ -1,0 +1,245 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Blog Dashboard{% endblock title %}
+
+
+{% block pop %} 
+
+<div class="add_member_pop_back_before" id="add_member_pop_back_before">
+    <div id="add_member_pop_before" class="add_member_pop_before">
+        <div class="pophead">
+            <h2>Add Blog</h2>
+            <img src="{% static 'images/closeimg.png' %}" alt="x" onclick="popup_add()" class="popbody">
+        </div>
+        <form action="/add_blog"  method="post" enctype="multipart/form-data" class="popbody">
+            {% csrf_token %}
+                
+                <div>
+                    <label for="Photo">Photo</label>
+                    <input type="file" name="Photo" placeholder="Upload your new profile photo">
+                </div>
+                <div>
+                    <label for="Title">Title</label>
+                    <input type="text" name="Title" placeholder="Enter Title">
+                </div>
+                <div>
+                    <label for="editor">Editor Name</label>
+                    <input type="text" name="editor" placeholder="Enter Title">
+                </div>
+                <div class="big_input">
+                    <label for="Para">Paragraph</label>
+                    <textarea name="Para" id="" cols="30" rows="14"></textarea>
+                </div>
+                <div class="class_submit">
+                    <button type="submit" onclick="popup_add()">Upload Blog +</button>
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>  
+
+
+
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+<h2>Blog Dashboard</h2>
+
+<div class="team_action">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Blog Title">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+    <button onclick="popup_add()" class="addbtn">Add Blog+</button>
+
+</div>
+
+{% endblock TabName %}
+
+{% block body %}
+
+
+
+    <div class="view_data_box">
+        {% for day in previous_7_days %}
+        <span class="day">{{day}}</span>
+        {% endfor %}
+    
+    
+        {% for view in previous_7_day_view_data %}
+        <span  class="views">{{view}}</span>
+        {% endfor %}
+    </div>
+
+
+    <div class="blog_dash_body">
+
+        <div class="blog_dash_chart">
+            <div id="curve_chart" style="width: 100%; height: 100%;"></div>
+        </div>
+    
+        <div class="blog_count">
+            <h3>Status</h3>
+            <table>
+                <tr>
+                    <td><img src="{% static 'images/web_visit.png' %}" alt="" ></td>
+                    <td><p>Total Blog Views</p></td>
+                    <td><h5>{{all_Blog_view_count}}<h5></td>
+                </tr>
+                <tr>
+                    <td><img src="{% static 'images/web_visit.png' %}" alt="" ></td>
+                    <td><p>Today Blog Views</p></td>
+                    <td><h5>{{all_Blog_view_day_count}}</h5></td>
+                </tr>
+                <tr>
+                    <td><img src="{% static 'images/blog_logo.png' %}" alt="" ></td>
+                    <td><p>Total Blog Count</p></td>
+                    <td><h5>{{all_blogs_count}}</h5></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="blog_count reuse_top_blog">
+            <h3>Top Heading</h3>
+            <table>
+                
+                {% for i in top_blog %}
+                <tr>
+                    <td><img src="/media/{{i.Image}}" alt="photo of {{i.Title}}"></td>
+                    <td><p title="{{i.Title}}"><a href="/blog_temp/{{i.id}}/">{{i.Title|slice:":18"}}...</a></p></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+        <div class="all_blog_list">
+            <h3>Articles</h3>
+            <div class="all_blog_table">
+                <table>
+                    {% for a in all_blogs %}
+                    <tr>
+                        <td><img src="/media/{{a.Image}}" alt="photo of {{a.Title}}"></td>
+                        <td>
+                            <a href="/blog_temp/{{a.id}}/" style="text-decoration: none;">
+                                <p title="{{a.Title}}">
+                                    {{a.Title|slice:":40"}}...
+                                </p>
+                            </a>
+                        </td>
+                        <td><img src="{% static 'images/black_eye.png' %}" alt="photo of eye" style="height: 15px; width: 15px;"> {{a.views_count}}</td>
+                        <td>
+                            <a href="/update_blog/{{a.id}}/" class="action">Update</a>
+                            <a href="/delete_blog?id={{a.id}}" class="action">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    
+                </table>
+
+                {% if result == True %}
+
+                <div style="color: orange;">
+                    Result for"{{data}}..."<a href="/blog_dash">Go to all List</a>
+                </div>
+
+                {% elif result == False %}
+
+                <div style="color: orange;">
+                    "{{data}}..." is not Found !!<a href="/blog_dash">Go to all List</a>
+                </div>
+
+                {% endif %} 
+            </div>
+        </div>
+
+        <div class="recent_comment">
+            <h3>Recent Comments</h3>
+            <div class="rc_list">
+                <table>
+                {% for k in new_comments %}
+
+                    <tr>
+                        <td><img src="{% static 'images/img.jpg' %}" alt="" class="prof_img"></td>
+                        <td>                        
+                            <h4>{{k.Name}}</h4>
+                            <p title="{{k.comment_text}}">{{k.comment_text|slice:":19"}}...</p>
+                        </td>
+                        <td>
+                            <a href="/blog_temp/{{k.reply_blog.id}}/#{{k.id}}">
+                                <img src="/media/{{k.reply_blog.Image}}" alt="photo of {{k.reply_blog.Title}}" class="blog_img">
+                            </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                
+                </table>
+            </div>
+            <center><a href="/all_comment" class="lower_rc">View all</a></center>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+     
+     
+
+    
+
+        
+        
+        
+
+    
+
+
+
+    {% for j in all_blogs %}
+
+        <img src="/media/{{j.Image}}" alt="photo of {{j.Title}}">
+        {{j.Title}}
+        {{j.editor}}
+        {{j.views_count}}
+
+    {% endfor %}
+
+
+   
+        
+        
+        
+    
+
+    
+
+
+ -->
+
+
+
+
+
+
+
+    
+    {% endblock body %}
+

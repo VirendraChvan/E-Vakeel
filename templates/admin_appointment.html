@@ -1,0 +1,71 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Appointment{% endblock title %}
+
+
+{% block pop %} 
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+ <h2>Appointment of Evakeel</h2>
+
+<div class="team_action">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Name">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+   <button class="addbtn"><a href="/Create_appointment">Manage Appointment+</a></button>
+
+</div>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+<div class="booked_apt_table">
+    <table>
+        <tr class="table_head">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Time Slot</th>
+        </tr>
+        {% for i in apt %}
+        <tr class="apt_table_row" id="{{i.id}}">
+            <td>{{i.Name}}</td>
+            <td>{{i.Email}}</td>
+            <td>{{i.Phone}}</td>
+            <td>{{i.Date}}</td>
+            <td>{{i.Subject}}</td>
+            <td>{{i.schedule.start_time}} To {{i.schedule.end_time}}  </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+            {% if result == True %}
+
+        <div>
+            Result for"{{data}}..."<a href="/admin_team">Go to all List</a>
+        </div>
+
+    {% elif result == False %}
+
+        <div>
+            "{{data}}..." is not Found !!<a href="/admin_team">Go to all List</a>
+        </div>
+   
+    {% endif %} 
+</div>
+
+
+
+    
+{% endblock body %}
+

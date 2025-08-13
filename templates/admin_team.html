@@ -1,0 +1,115 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Team{% endblock title %}
+
+
+{% block pop %} 
+
+
+    <div class="add_member_pop_back_before" id="add_member_pop_back_before">
+        <div id="add_member_pop_before" class="add_member_pop_before">
+            <div class="pophead">
+                <h2>Add Member</h2>
+                <img src="{% static 'images/closeimg.png' %}" alt="x" onclick="popup_add()">
+            </div>
+            <form action="/add_team"  method="post" enctype="multipart/form-data" class="popbody">
+                {% csrf_token %}
+                    
+                    <div>
+                        <label for="Photo">Photo</label>
+                        <input type="file" name="Photo" placeholder="Upload Your Profile Photo">
+                    </div>
+                    <div>
+                        <label for="Name">Name</label>
+                        <input type="text" name="Name" placeholder="Enter Your Name">
+                    </div>
+                    <div>
+                        <label for="Qulification">Qulification</label>
+                        <input type="text" name="Qulification" placeholder="Enter Your Qulification">
+                    </div>
+                    <div class="big_input">
+                        <label for="Description">Description</label>
+                        <textarea name="Description" id="" cols="30" rows="14">Enter Your Description</textarea>
+                    </div>
+                    <div class="class_submit">
+                        <button type="submit" onclick="member_added()">Add Member on Website +</button>
+                    </div>
+                </div>
+            </form>  
+        </div>
+    </div>  
+
+
+    
+
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+<h2>Team of Evakeel</h2>
+
+<div class="team_action">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Name">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+    <button onclick="popup_add()" class="addbtn">Add Member +</button>
+
+</div>
+
+{% endblock TabName %}
+
+{% block body %}
+
+
+
+    <div class="team_prt">
+
+
+        {% for i in member %}
+        <div class="team_box">
+            <div class="upperline"></div>
+            <div class="team_body">
+                <div class="pro_img">
+                    <img src="/media/{{i.Image}}" alt="photo of {{i.Name}}">
+                </div>
+                <div class="pro_info">
+
+                    <div class="team_name">
+                        <h3>{{i.Name}}</h3>
+                        <h5>{{i.Qualification}}</h5>
+                    </div>
+
+                    <p>{{i.Description}}</p>
+
+                    <div class="team_btn_box">
+                        <a href="/update_team/{{i.id}}/"><button class="Update">Update</button></a>
+                        <a href="/delete_team?id={{i.id}}"><button class="Delete" onclick="delete_member()"> Delete</button></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if result == True %}
+
+        <div>
+            Result for"{{data}}..."<a href="/admin_team">Go to all List</a>
+        </div>
+
+    {% elif result == False %}
+
+        <div>
+            "{{data}}..." is not Found !!<a href="/admin_team">Go to all List</a>
+        </div>
+    
+    {% endif %}
+
+    </div>
+    
+    {% endblock body %}
+

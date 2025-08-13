@@ -1,0 +1,40 @@
+{% extends "Clientside_base.html" %}
+{% load static %}
+
+{% block title %}Evakeel | Blog{% endblock title %}
+
+
+
+{% block body %}
+
+
+<div class="blog_menu_head">
+    <h1 class="heading">Blog of E-vakeel</h1>
+</div>
+
+<div class="blog_menu_body">
+
+    {% for b in blog_qs %}
+
+    <a href="/blog_temp/{{b.id}}/" class="blog_box">
+        <img src="/media/{{b.Image}}" alt="photo of {{b.Title}}" class="blog_menu_img">
+        <div>
+            <h3>{{b.Title}}</h3>
+            <p>{{b.para|slice:":150"}}...</p>
+            <h5>{{b.editor}} | {{b.date_blog}}</h5>
+        </div>
+    </a>
+
+    {% endfor %}
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock body %}

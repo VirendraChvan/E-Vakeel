@@ -1,0 +1,94 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block TabName %}
+    <h2>Dashboard</h2>
+    
+{% endblock TabName %}
+{% block body %} 
+
+<div class="cb_div">
+
+    <div class="counterbox">
+        <div class="box1">
+            <h4>Today Visits</h4>
+            <p>{{day_visit}}</p>
+        </div>
+        <div  class="box2">
+            <img src="{% static 'images/web_icon.png' %}" alt="">
+            
+        </div>  
+    </div>
+
+    <div class="counterbox">
+        <div class="box1">
+            <h4>Total Visits</h4>
+            <p>{{total_visit}}</p>
+        </div>
+        <div  class="box2">
+            <img src="{% static 'images/web_icon.png' %}" alt="">
+        </div>  
+    </div>
+
+    <div class="counterbox">
+        <div class="box1">
+            <h4>Today's messages</h4>
+            <p>{{day_count}}</p>
+        </div>
+        <div  class="box2">
+            <img src="{% static 'images/msg_icon2.png' %}" alt="">
+        </div>  
+    </div>
+
+    <div class="counterbox">
+        <div class="box1">
+            <h4>Total Messages</h4>
+            <p>{{total_count}}</p>
+        </div>
+        <div  class="box2">
+            <img src="{% static 'images/msg_icon2.png' %}" alt="">
+        </div>  
+    </div>
+</div>
+
+
+
+
+<div class="view_data_box">
+
+    {% for day in previous_7_days %}
+    <span class="day">{{day}}</span>
+    {% endfor %}
+
+
+    {% for view in previous_7_day_view_data %}
+    <span  class="views">{{view}}</span>
+    {% endfor %}
+    
+
+    {% for msg in previous_7_day_msg_data %}
+    <span  class="messages">{{msg}}</span>
+    {% endfor %}
+
+</div>
+
+
+<div class="charts">
+    <div class="chart_box_div">
+        <div id="curve_chart" style="width: 100%; height: 100%;"></div>
+    </div>
+    <div class="chart_box_div">
+        <div id="curve_chart1"  style="width: 100%; height: 100%;"></div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}
+
+
+

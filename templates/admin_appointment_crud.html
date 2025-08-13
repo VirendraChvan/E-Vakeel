@@ -1,0 +1,109 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Appointment{% endblock title %}
+
+
+{% block pop %} 
+
+
+<div class="add_appointment_pop_back_before" id="add_appointment_pop_back_before">
+
+</div>  
+
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+  <h2>
+        <a href="/Appointment_section">Appointment of Evakeel </a> 
+        <a href="/Create_appointment" class="subtab_head"> > Manage Appointment</a>
+  </h2>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+
+    <div class="crud_appointment_tab">
+
+        <form action="/add_appointment" method="post" class="apt_input">
+            {% csrf_token %}
+
+            <div>
+                <label for="sc_name">Slot Name</label><br>
+                <input type="text" name="sc_name"  placeholder="Enter Slot Name" required>  
+            </div>
+            
+            <div>
+                <label for="start_time">Start time</label><br>
+                <input type="time" format="%I:%M %p" name="start_time" id="" required>
+            </div>
+            
+            <div>
+                <label for="end_time">End time</label><br>
+                <input type="time" format="%I:%M %p" name="end_time" id="" required>
+            </div>
+            
+
+            <button type="submit">+ Add New Appointment</button>
+        </form>
+
+        <div class="apt_alert">
+
+            {% if messages %}
+            {{messages.tags}}
+                {% for message in messages %}
+                <div>{{ message }}</div>
+                {% endfor %}  
+            {% endif %}
+
+            {% if result == True %}
+            <div>
+                Result for"{{data}}..."<a href="/Create_appointment">Go to all List</a>"
+            </div>
+            {% elif result == False %}
+            <div>
+                "{{data}}..." is not Found !! "<a href="/Create_appointment">Go to all List</a>"
+            </div>
+            {% endif %}
+
+        </div>
+
+        <div class="apt_list_parent">
+
+            <!-- <div class="apt_search_box_div"> -->
+                <form class="search_box apt_search_box">
+                    <input type="text" name="Search" placeholder="Search By Name">
+                    <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+                </form>
+            <!-- </div> -->
+
+
+            <div class="apt_table_prt">
+                <table class="apt_table">
+                    {% for s in slots %}
+                        <tr class="apt_table_row">
+                            <td>{{s.sc_name}}</td>
+                            <td>{{s.start_time}}</td>
+                            <td>{{s.end_time}}</td>
+                            <td>
+                                <a href="/update_appointment/{{s.id}}/"><button >Update</button></a>
+                                <a href="/delete_appointment?id={{s.id}}"><button> Delete</button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            
+        </div>
+
+</div>
+
+
+    
+{% endblock body %}
+

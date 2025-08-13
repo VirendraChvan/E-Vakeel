@@ -1,0 +1,83 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Blog Subscribers{% endblock title %}
+
+
+{% block pop %} 
+
+{% endblock pop %}       
+   
+        
+{% block TabName %}
+<style>
+    table tr td 
+    {
+        font-size: 12px;
+        text-align: left;
+        padding: 2%;
+    }
+    table tr th
+    {
+        text-align: left;
+        padding: 2%;
+    }
+</style>
+<h2>
+    Blog Subscribers
+</h2>
+
+
+<div class="team_action" style="justify-content: end;">
+
+    <form class="search_box">
+        <input type="text" name="Search" placeholder="Search By Name">
+        <button type="submit"><img src="{% static 'images/Search.png' %}" alt=""></button>
+    </form>
+
+</div>
+
+
+{% endblock TabName %}
+
+{% block body %}
+
+<div class="booked_apt_table">
+    <table>
+        <tr class="table_head">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        
+        {% for i in subs %}
+        <tr class="apt_table_row">
+            <td>{{i.Name}}</td>
+            <td>{{i.Email}}</td>
+            <td>{{i.Date}}</td>
+            <td><a href="/delete_subs?id={{i.id}}" class="cmt_delete">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+            {% if result == True %}
+
+        <div>
+            Result for"{{data}}..."<a href="/all_subs">Go to all List</a>
+        </div>
+
+    {% elif result == False %}
+
+        <div>
+            "{{data}}..." is not Found !!<a href="/all_subs">Go to all List</a>
+        </div>
+   
+    {% endif %} 
+</div>
+
+
+
+    
+{% endblock body %}
+
