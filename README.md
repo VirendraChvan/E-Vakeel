@@ -22,7 +22,7 @@ Built with **HTML, CSS, JavaScript, and Django**, the platform aims to connect c
 **Frontend:**  
 - HTML5  
 - CSS3  
-- JavaScript (Vanilla)  
+- JavaScript 
 - Google Charts (for data visualization)
 
 **Backend:**  
