@@ -42,8 +42,8 @@ Built with **HTML, CSS, JavaScript, and Django**, the platform aims to connect c
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/e-vakeel.git
-cd e-vakeel
+git clone https://github.com/VirendraChvan/E-Vakeel.git
+cd E-Vakeel
 
 # Create virtual environment
 python -m venv venv
